@@ -1,6 +1,9 @@
 const form = document.querySelector(".todo_form");
 const input = document.querySelector(".todo_input");
 const todo_container = document.querySelector(".todo_container");
+let deleteBtns;
+let checkboxes;
+let editBtns;
 
 const addHTML = (todo) => {
 
@@ -53,7 +56,10 @@ const startConf = () => {
     }else{
         todos.forEach(todo => {             // herbir todo için
             addHTML(todo);                  // html ye kaydet
-        })
+        });
+        deleteBtns = document.querySelectorAll(".todo_delete");
+        checkboxes = document.querySelectorAll(".todo_cb");
+        editBtns = document.querySelectorAll(".todo_edit");
     }                                               // setItem içine string olarak alır
 }
 
@@ -78,4 +84,47 @@ const addTodo = (e) => {        // form submit olduğunda yenilenir --- bu durum
     form.reset();       // formu sıfırladık
 }    
 
+const deleteTodo = (e) => {
+    const todo = e.target.parentElement.parentElement;
+    const text = todo.firstChild.children[1].textContent;
+    
+    let todos = JSON.parse(localStorage.getItem("todos"));
+    todos = todos.filter(td => td.text != text);
+    localStorage.setItem("todos", JSON.stringify(todos));
+
+    todo.remove();
+}
+
+const completeTodo = (e) => {
+    const todo = e.target.parentElement.parentElement;
+    const text = todo.firstChild.children[1].textContent;
+    
+    let todos = JSON.parse(localStorage.getItem("todos"));
+    todos.forEach(td => {
+        if(td.text === text) td.isCompleted = !td.isCompleted
+    });
+        
+    localStorage.setItem("todos", JSON.stringify(todos));  
+}
+
+const editTodo = (e) => {
+    const todo = e.target.parentElement.parentElement;
+    const text = todo.firstChild.children[1].textContent;
+    
+    let todos = JSON.parse(localStorage.getItem("todos"));
+    todos = todos.filter(td => td.text != text);
+    localStorage.setItem("todos", JSON.stringify(todos));
+
+    todo.remove();
+
+    input.value = text;
+}
+
+
+
+
+
 form.addEventListener("submit", addTodo);       // form submit olduğu zaman todo yu ekleyeceğiz  
+deleteBtns.forEach(btn => btn.addEventListener("click", deleteTodo));
+checkboxes.forEach(btn => btn.addEventListener("click", completeTodo));
+editBtns.forEach(btn => btn.addEventListener("click", editTodo));
