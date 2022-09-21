@@ -60,5 +60,18 @@ body{
     background-color: antiquewhite;
 }
 .todo {
-    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.todo_left{
+    display: flex;
+    align-items: center;
+}
+.todo_text, .todo_edit{
+    margin-left: 8px;
+}
+.todo_cb:checked ~ .todo_text{
+    text-decoration: line-through;
+    color: gray;
 }
