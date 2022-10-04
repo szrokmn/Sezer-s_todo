@@ -22,7 +22,7 @@ body{
     padding: 15px 20px;
     border-radius: 8px;
     margin-top: 32px;
-    background-color: antiquewhite;
+    background-color: rgb(211, 199, 183);
 }
 .todo_title{
     font-size: 2.5rem;
